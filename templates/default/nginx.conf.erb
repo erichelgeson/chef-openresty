@@ -48,6 +48,10 @@ http {
                   '$status $body_bytes_sent "$http_referer" '
                   '"$http_user_agent" "$http_x_forwarded_for"';
 
+  log_format splunk '[$time_local] ClientIP=$remote_addr nginx_server=$server_name upstream_address=$upstream_addr request="$request" '
+                    'upstream_response_time=$upstream_response_time Status=$status size=$body_bytes_sent referer="$http_referer" '
+                    'user_agent="$http_user_agent" request_time=$request_time';
+
   <% if node['openresty']['keepalive'] == "on" %>
   keepalive_timeout  <%= node['openresty']['keepalive_timeout'] %>;
   <% end %>
